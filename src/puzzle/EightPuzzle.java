@@ -1,5 +1,6 @@
 package puzzle;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,6 +47,8 @@ import search.Solver;
  *
  */
 public class EightPuzzle implements SearchProblem<List<Integer>> {
+	
+	private List<Integer> initial;
 	/**
 	 * Creates a new instance of the 8 puzzle with the given starting values.
 	 * 
@@ -59,18 +62,37 @@ public class EightPuzzle implements SearchProblem<List<Integer>> {
 	 */
 	public EightPuzzle(List<Integer> startingValues) {
 		// TODO
+		initial = startingValues;
 	}
 
 	@Override
 	public List<Integer> getInitialState() {
 		// TODO
-		return null;
+		return initial;
 	}
 
 	@Override
 	public List<List<Integer>> getSuccessors(List<Integer> currentState) {
 		// TODO
+		List<List<Integer>> killme = new ArrayList<List<Integer>>();
+		int pos = currentState.indexOf(0);
+		if (pos == 0){
+			killme.add(swap(0,1,currentState));
+			killme.add(swap(0,3,currentState));
+		}
+		if (pos == 1){
+			killme.add(swap(1,2,currentState));
+			killme.add(swap(1,4,currentState));
+			killme.add(swap(1,0,currentState));
+		}
 		return null;
+	}
+	
+	private List<Integer> swap(int a, int b, List<Integer> pain){
+		int temp = pain.get(a);
+		pain.set(a, pain.get(b));
+		pain.set(b, temp);
+		return pain;
 	}
 
 	@Override
